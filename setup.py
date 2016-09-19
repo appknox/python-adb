@@ -15,7 +15,7 @@
 from setuptools import setup
 
 setup(
-    name = 'adb',
+    name = 'ak-adb',
     packages = ['adb'],
     version = '1.1.0',
     author = 'Fahrzin Hemmati',

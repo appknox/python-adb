@@ -14,7 +14,7 @@
 # limitations under the License.
 """Tests for adb.fastboot."""
 
-import cStringIO
+import io
 import os
 import tempfile
 import unittest
@@ -58,7 +58,7 @@ class FastbootTest(unittest.TestCase):
 
   def testDownload(self):
     raw = 'aoeuidhtnsqjkxbmwpyfgcrl'
-    data = cStringIO.StringIO(raw)
+    data = io.StringIO(raw)
 
     self.ExpectDownload([raw])
     commands = fastboot.FastbootCommands(self.usb)
@@ -68,14 +68,14 @@ class FastbootTest(unittest.TestCase):
 
   def testDownloadFail(self):
     raw = 'aoeuidhtnsqjkxbmwpyfgcrl'
-    data = cStringIO.StringIO(raw)
+    data = io.StringIO(raw)
 
     self.ExpectDownload([raw], succeed=False)
     commands = fastboot.FastbootCommands(self.usb)
     with self.assertRaises(fastboot.FastbootRemoteFailure):
       commands.Download(data)
 
-    data = cStringIO.StringIO(raw)
+    data = io.StringIO(raw)
     self.ExpectDownload([raw], accept_data=False)
     with self.assertRaises(fastboot.FastbootTransferError):
       commands.Download(data)
@@ -86,7 +86,7 @@ class FastbootTest(unittest.TestCase):
     self.ExpectFlash(partition)
     commands = fastboot.FastbootCommands(self.usb)
 
-    output = cStringIO.StringIO()
+    output = io.StringIO()
     def InfoCb(message):
       if message.header == 'INFO':
         output.write(message.message)

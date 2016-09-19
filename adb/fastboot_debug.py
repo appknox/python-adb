@@ -41,7 +41,7 @@ def Devices(args):
   015DB7591102001A        device
   """
   for device in fastboot.FastbootCommands.Devices():
-    print('%s\tdevice' % device.serial_number)
+    print(('%s\tdevice' % device.serial_number))
   return 0
 
 

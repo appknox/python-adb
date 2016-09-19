@@ -61,7 +61,7 @@ def MakeWireIDs(ids):
       cmd_id: sum(ord(c) << (i * 8) for i, c in enumerate(cmd_id))
       for cmd_id in ids
   }
-  wire_to_id = {wire: cmd_id for cmd_id, wire in id_to_wire.items()}
+  wire_to_id = {wire: cmd_id for cmd_id, wire in list(id_to_wire.items())}
   return id_to_wire, wire_to_id
 
 

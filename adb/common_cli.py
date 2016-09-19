@@ -20,7 +20,7 @@ outputting the results.
 """
 
 import argparse
-import cStringIO
+import io
 import inspect
 import logging
 import re
@@ -98,7 +98,7 @@ def MakeSubparser(subparsers, parents, method, arguments=None):
   # arguments that default to '' but excludes arguments that default to None.
   offset = len(argspec.args) - len(argspec.defaults or []) - 1
   positional = []
-  for i in xrange(1, len(argspec.args)):
+  for i in range(1, len(argspec.args)):
     if i > offset and argspec.defaults[i-offset-1] is None:
       break
     positional.append(argspec.args[i])
@@ -125,7 +125,7 @@ def _RunMethod(dev, args, extra):
   logging.info('%s(%s)', args.method.__name__, ', '.join(args.positional))
   result = args.method(dev, *args.positional, **extra)
   if result is not None:
-    if isinstance(result, cStringIO.OutputType):
+    if isinstance(result, io.OutputType):
       sys.stdout.write(result.getvalue())
     elif isinstance(result, (list, types.GeneratorType)):
       r = ''
@@ -149,10 +149,10 @@ def StartCli(args, device_factory, extra=None, **device_kwargs):
         port_path=args.port_path, serial=args.serial,
         default_timeout_ms=args.timeout_ms, **device_kwargs)
   except usb_exceptions.DeviceNotFoundError as e:
-    print >> sys.stderr, 'No device found: %s' % e
+    print('No device found: %s' % e, file=sys.stderr)
     return 1
   except usb_exceptions.CommonUsbError as e:
-    print >> sys.stderr, 'Could not connect to device: %s' % e
+    print('Could not connect to device: %s' % e, file=sys.stderr)
     return 1
   try:
     return _RunMethod(dev, args, extra or {})

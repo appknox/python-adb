@@ -14,7 +14,7 @@
 # limitations under the License.
 """Tests for adb."""
 
-import cStringIO
+import io
 import struct
 import unittest
 
@@ -192,7 +192,7 @@ class FilesyncAdbTest(BaseAdbTest):
     usb = self._ExpectSyncCommand([''.join(send)], [data])
 
     adb_commands = self._Connect(usb)
-    adb_commands.Push(cStringIO.StringIO(filedata), '/data', mtime=mtime)
+    adb_commands.Push(io.StringIO(filedata), '/data', mtime=mtime)
 
   def testPull(self):
     filedata = "g'ddayta, govnah"

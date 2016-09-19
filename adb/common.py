@@ -189,7 +189,7 @@ class UsbHandle(object):
   @classmethod
   def PortPathMatcher(cls, port_path):
     """Returns a device matcher for the given port path."""
-    if isinstance(port_path, basestring):
+    if isinstance(port_path, str):
       # Convert from sysfs path to port_path.
       port_path = [int(part) for part in SYSFS_PORT_SPLIT_RE.split(port_path)]
     return lambda device: device.port_path == port_path

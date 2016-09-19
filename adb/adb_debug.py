@@ -46,10 +46,10 @@ def Devices(args):
   """
   for d in adb_commands.AdbCommands.Devices():
     if args.output_port_path:
-      print('%s\tdevice\t%s' % (
-            d.serial_number, ','.join(str(p) for p in d.port_path)))
+      print(('%s\tdevice\t%s' % (
+            d.serial_number, ','.join(str(p) for p in d.port_path))))
     else:
-      print('%s\tdevice' % d.serial_number)
+      print(('%s\tdevice' % d.serial_number))
   return 0
 
 
